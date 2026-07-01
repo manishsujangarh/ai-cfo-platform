@@ -1,10 +1,14 @@
 [project]
 name = "ai-cfo-platform"
 version = "0.1.0"
-description = "Add your description here"
+description = "Production-grade AI CFO Platform"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "fastapi>=0.139.0",
-    "uvicorn[standard]>=0.49.0",
+    "alembic>=1.18.5",
+]
+
+[tool.uv.workspace]
+members = [
+    "apps/api",
 ]

@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17
+
+    container_name: ai-cfo-postgres
+
+    environment:
+      POSTGRES_DB: ai_cfo
+      POSTGRES_USER: ai_cfo
+      POSTGRES_PASSWORD: ai_cfo
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

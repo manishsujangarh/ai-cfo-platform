@@ -1,11 +1,14 @@
 [project]
-name = "api"
+name = "ai-cfo-api"
 version = "0.1.0"
-description = "Add your description here"
+description = "FastAPI backend for the AI CFO Platform"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "alembic>=1.18.5",
     "fastapi>=0.139.0",
+    "psycopg[binary]>=3.3.4",
     "pydantic-settings>=2.14.2",
+    "sqlalchemy>=2.0.51",
     "uvicorn[standard]>=0.49.0",
 ]
