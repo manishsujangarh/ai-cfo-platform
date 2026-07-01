@@ -1,11 +1,18 @@
 from fastapi import FastAPI
 
-app = FastAPI(
-    title="AI CFO API",
-    description="Production AI CFO Platform",
-    version="0.1.0",
-)
+from app.core.config import settings
 
+app = FastAPI(
+    title=settings.app_name,
+    version=settings.app_version,
+)
+@app.get("/")
+async def root():
+    return {
+        "application": settings.app_name,
+        "version": settings.app_version,
+        "debug": settings.debug,
+    }
 @app.get("/api/v1")
 def root():
     return {
@@ -18,3 +25,4 @@ def health():
     return {
         "status": "healthy"
     }
+
