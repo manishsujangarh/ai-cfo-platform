@@ -2,11 +2,14 @@ from fastapi import FastAPI
 
 from app.core.config import settings
 from app.repositories.health_repository import get_db_version
+from app.users.api import router as users_router
+
 
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
 )
+app.include_router(users_router)
 
 
 @app.get("/")
