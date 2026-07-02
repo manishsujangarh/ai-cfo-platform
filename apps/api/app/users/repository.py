@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 from app.users.model import User
 
 
-def create_user(db: Session, email: str, full_name: str | None):
-    user = User(email=email, full_name=full_name)
+def create_user(db: Session, email: str, full_name: str | None, password_hash: str):
+    # Pass the password_hash directly into the User instance instantiation
+    user = User(email=email, full_name=full_name, password_hash=password_hash)
     db.add(user)
     db.commit()
     db.refresh(user)

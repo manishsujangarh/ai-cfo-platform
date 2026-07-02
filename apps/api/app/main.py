@@ -3,6 +3,10 @@ from fastapi import FastAPI
 from app.core.config import settings
 from app.repositories.health_repository import get_db_version
 from app.users.api import router as users_router
+from app.auth.api import router as auth_router
+from app.organizations.api import router as organizations_router
+from app.customers.api import router as customers_router
+from app.vendors.api import router as vendors_router
 
 
 app = FastAPI(
@@ -10,6 +14,11 @@ app = FastAPI(
     version=settings.app_version,
 )
 app.include_router(users_router)
+app.include_router(auth_router)
+app.include_router(organizations_router)
+app.include_router(customers_router)
+app.include_router(vendors_router)
+
 
 
 @app.get("/")
