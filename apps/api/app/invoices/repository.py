@@ -1,4 +1,5 @@
 from sqlalchemy import select
+from sqlalchemy import func
 from sqlalchemy.orm import Session, selectinload
 
 from app.invoices.model import Invoice
@@ -110,3 +111,17 @@ def delete(
 
     db.delete(invoice)
     db.commit()
+
+
+def count_invoices(
+    db: Session,
+    organization_id: int,
+) -> int:
+    statement = (
+        select(func.count(Invoice.id))
+        .where(
+            Invoice.organization_id == organization_id
+        )
+    )
+
+    return db.scalar(statement) or 0
