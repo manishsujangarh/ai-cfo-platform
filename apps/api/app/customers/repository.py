@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.customers.model import Customer
@@ -23,3 +24,22 @@ def get_customer(db: Session, customer_id: int):
 
 def get_customers(db: Session):
     return db.query(Customer).all()
+
+
+
+def count_customers(
+    db: Session,
+    organization_id: int,
+) -> int:
+    """
+    Return the total number of customers for an organization.
+    """
+
+    return (
+        db.query(func.count(Customer.id))
+        .filter(
+            Customer.organization_id == organization_id
+        )
+        .scalar()
+        or 0
+    )

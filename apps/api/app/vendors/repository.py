@@ -1,7 +1,8 @@
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from datetime import datetime
 from app.vendors.model import Vendor
+
 
 
 def create_vendor(db: Session, organization_id: int, name: str, email: str | None, phone: str | None, address: str | None, gst_number: str | None):
@@ -28,3 +29,17 @@ def get_vendor(db: Session, vendor_id: int):
 
 def get_vendors(db: Session):
     return db.query(Vendor).all()
+
+
+def count_vendors(
+    db: Session,
+    organization_id: int,
+) -> int:
+    statement = (
+        select(func.count(Vendor.id))
+        .where(
+            Vendor.organization_id == organization_id
+        )
+    )
+
+    return db.scalar(statement) or 0
