@@ -1,83 +1,15 @@
-from sqlalchemy.orm import Session
-
-from app.agents.registry import TOOLS
+from app.agents.graph import app_graph
 
 
-def chat(
-    db: Session,
-    organization_id: int,
-    message: str,
-) -> dict:
-
-    text = message.lower()
-
-    if "summary" in text:
-        result = TOOLS["business_summary"](
-            db,
-            organization_id,
+class AgentService:
+    def run(self, message: str, organization_id: int, user_id: int, db):
+        result = app_graph.invoke(
+            {
+                "message": message,
+                "organization_id": organization_id,
+                "user_id": user_id,
+                "db": db,
+            }
         )
 
-        return {
-            "answer": result,
-        }
-
-    if "customer" in text:
-        result = TOOLS["customer_count"](
-            db,
-        )
-
-        return {
-            "answer": f"You have {result} customers.",
-        }
-
-    if "invoice" in text:
-        result = TOOLS["invoice_count"](
-            db,
-        )
-
-        return {
-            "answer": f"You have {result} invoices.",
-        }
-
-    if "payment" in text:
-        result = TOOLS["payment_count"](
-            db,
-        )
-
-        return {
-            "answer": f"You have {result} payments.",
-        }
-
-    if "revenue" in text:
-        result = TOOLS["revenue"](
-            db,
-            organization_id,
-        )
-
-        return {
-            "answer": f"Total revenue is ₹{result}.",
-        }
-
-    if "outstanding" in text:
-        result = TOOLS["outstanding"](
-            db,
-            organization_id,
-        )
-
-        return {
-            "answer": f"Outstanding amount is ₹{result}.",
-        }
-
-    if "unpaid" in text:
-        result = TOOLS["unpaid_invoices"](
-            db,
-            organization_id,
-        )
-
-        return {
-            "answer": result,
-        }
-
-    return {
-        "answer": "I don't understand that request yet.",
-    }
+        return result["response"]

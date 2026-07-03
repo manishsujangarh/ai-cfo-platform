@@ -8,7 +8,6 @@ from app.organizations.api import router as organizations_router
 from app.customers.api import router as customers_router
 from app.vendors.api import router as vendors_router
 from app.journal_entries.api import router as journal_entries_router
-from app.invoices.api import router as invoices_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -20,8 +19,6 @@ app.include_router(organizations_router)
 app.include_router(customers_router)
 app.include_router(vendors_router)
 app.include_router(journal_entries_router)
-app.include_router(invoices_router)
-
 
 
 @app.get("/")

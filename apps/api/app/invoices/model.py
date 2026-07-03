@@ -39,7 +39,7 @@ class Invoice(Base,
 
     invoice_number: Mapped[str] = mapped_column(
         String(50),
-        unique=True,
+       
         index=True,
         nullable=False,
     )
@@ -154,3 +154,6 @@ class InvoiceItem(Base):
     invoice: Mapped["Invoice"] = relationship(
         back_populates="items",
     )
+
+
+    
