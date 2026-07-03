@@ -24,6 +24,11 @@ from app.organizations import model
 from app.organization_members import model
 from app.customers import model
 from app.vendors import model
+from app.accounts import model
+from app.journal_entries import model
+from app.invoices import model
+from app.payments import model
+
 
 target_metadata = Base.metadata
 
