@@ -1,4 +1,4 @@
-from app.ai.llm.base import BaseLLM
+from app.agents.llm.base import BaseLLM
 
 
 class MockLLM(BaseLLM):

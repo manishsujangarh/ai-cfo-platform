@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from sqlalchemy import func, select
 from app.payments.model import Payment
 
 
@@ -68,3 +68,17 @@ def delete(
 ) -> None:
     db.delete(payment)
     db.commit()
+
+
+def count_payments(
+    db: Session,
+    organization_id: int,
+) -> int:
+    statement = (
+        select(func.count(Payment.id))
+        .where(
+            Payment.organization_id == organization_id
+        )
+    )
+
+    return db.scalar(statement) or 0
