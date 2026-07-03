@@ -1,5 +1,19 @@
 # AI CFO Platform
 
+An AI-powered CFO platform built with FastAPI, PostgreSQL, SQLAlchemy, and modern AI engineering practices.
+
+Features:
+- Multi-tenant architecture
+- Double-entry accounting
+- Organizations and user management
+- Customers and vendors
+- Invoices and payments
+- Journal entries
+- AI-powered financial assistant (coming next)
+
+
+
+
 Production-grade AI CFO platform built using:
 
 - FastAPI
