@@ -1,20 +1,47 @@
 services:
   postgres:
     image: postgres:17
-
     container_name: ai-cfo-postgres
-
     environment:
       POSTGRES_DB: ai_cfo
       POSTGRES_USER: ai_cfo
       POSTGRES_PASSWORD: ai_cfo
-
     ports:
       - "5432:5432"
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: ai-cfo-api
+    environment:
+      database_host: postgres
+      database_port: 5432
+      database_name: ai_cfo
+      database_user: ai_cfo
+      database_password: ai_cfo
+      gemini_api_key: ${GEMINI_API_KEY:-demo-key}
+      gemini_model: gemini-2.5-flash
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-cfo-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
     restart: unless-stopped
 
 volumes:
