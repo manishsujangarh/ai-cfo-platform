@@ -14,7 +14,7 @@ from app.journal_entries.service import (
     delete,
     get,
     list_all,
-    post,
+
     update,
 )
 
@@ -24,11 +24,7 @@ router = APIRouter(
 )
 
 
-@router.post(
-    "",
-    response_model=JournalEntryResponse,
-    status_code=201,
-)
+
 def create_journal_entry(
     request: JournalEntryCreate,
     db: Session = Depends(get_db),

@@ -7,6 +7,7 @@ from app.invoices.calculator import calculate_invoice
 
 from app.invoices.model import Invoice
 
+from app.accounts.posting import post_invoice
 from app.invoices.repository import (
     create as repository_create,
     delete as repository_delete,
@@ -69,10 +70,16 @@ def create(
 
     invoice.items = items
 
-    return repository_create(
-        db,
-        invoice,
+    invoice = repository_create(
+    db,
+    invoice,
     )
+
+    post_invoice(
+    db,
+    invoice,
+    )
+    return invoice
 
 
 def get(

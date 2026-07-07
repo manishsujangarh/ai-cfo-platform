@@ -1,10 +1,16 @@
 from sqlalchemy.orm import Session
 
-from datetime import datetime
 from app.accounts.model import Account
 
 
-def create_account(db: Session, organization_id: int, code: str, name: str, type: str, subtype: str | None):
+def create_account(
+    db: Session,
+    organization_id: int,
+    code: str,
+    name: str,
+    type: str,
+    subtype: str | None,
+) -> Account:
     account = Account(
         organization_id=organization_id,
         code=code,
@@ -12,10 +18,23 @@ def create_account(db: Session, organization_id: int, code: str, name: str, type
         type=type,
         subtype=subtype,
     )
+
     db.add(account)
     db.commit()
     db.refresh(account)
+
     return account
+
+
+def get_by_id(
+    db: Session,
+    account_id: int,
+) -> Account | None:
+    return (
+        db.query(Account)
+        .filter(Account.id == account_id)
+        .first()
+    )
 
 
 def get_by_code(
@@ -32,9 +51,12 @@ def get_by_code(
         .first()
     )
 
-def get_account(db: Session, account_id: int):
-    return db.query(Account).filter(Account.id == account_id).first()
 
-
-def get_accounts(db: Session):
-    return db.query(Account).all()
+def list_all(
+    db: Session,
+) -> list[Account]:
+    return (
+        db.query(Account)
+        .order_by(Account.code)
+        .all()
+    )

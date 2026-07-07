@@ -10,6 +10,9 @@ DATABASE_URL = (
     f"{settings.database_name}"
 )
 
+print("DATABASE_USER =", settings.database_user)
+print("DATABASE_NAME =", settings.database_name)
+print("DATABASE_HOST =", settings.database_host)
 engine = create_engine(
     DATABASE_URL,
     pool_size=10,
