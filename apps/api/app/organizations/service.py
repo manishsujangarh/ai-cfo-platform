@@ -10,6 +10,7 @@ from app.organizations.repository import (
 )
 
 from app.organization_members.repository import create_member
+from app.accounts.service import create_default_accounts
 
 def slugify(text: str) -> str:
     return re.sub(
@@ -31,12 +32,18 @@ def create(
         name=name,
         slug=slug,
     )
+    
 
     create_member(
         db=db,
         organization_id=organization.id,
         user_id=user_id,
         role="OWNER",
+    )
+
+    create_default_accounts(
+        db=db,
+        organization_id=organization.id,
     )
 
     return organization
